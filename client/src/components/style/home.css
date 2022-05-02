@@ -1,0 +1,23 @@
+input[type=String],select{
+    width: 100%;
+    padding: 12px 20px;
+    margin-left: 4px;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+input[type=text],select{
+    width: 50%;
+    padding: 12px 20px;
+    margin-left: 5%;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+.res{
+    align-items: center;
+
+}
