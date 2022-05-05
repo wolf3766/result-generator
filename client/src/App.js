@@ -5,7 +5,8 @@ import Addmarks from './components/addmarks';
 import Home from './components/Home';
 import Detail from './components/details';
 import Login from './components/login';
-import Signup from './components/signup';
+import Register from './components/register';
+import Reset from './components/reset';
 
 import {
   BrowserRouter,
@@ -25,7 +26,9 @@ function App() {
     <Route path='/addmarks' element={<Addmarks />} />
     <Route path='/detail' element={<Detail />} />
     <Route path='/login' element={<Login />} />
-    <Route path='/signup' element={<Signup />} />
+    <Route path='/signup' element={<Register />} />
+    <Route path='/dashboard' element={<Addmarks />} />
+    <Route path='/reset' element={<Reset />} />
    </Routes>
 </BrowserRouter>
    </div>

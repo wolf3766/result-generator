@@ -2,8 +2,6 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const cors=require("cors");
 const mongoose= require("mongoose");
-const bcrypt= require("bcrypt");
-const jwt=require('jsonwebtoken');
 
 const app=express();
 app.use(cors());
@@ -12,7 +10,7 @@ app.use(bodyParser.urlencoded({
 }));
 app.use(bodyParser.json());
   
-mongoose.connect("mongodb://localhost:27017/result"); // for connection with local database.
+mongoose.connect("mongodb+srv://skc3766:1234@cluster0.wsew7.mongodb.net/Result?retryWrites=true&w=majority"); // for connection with local database.
 
 const MarksSchema={
         Student: String,
@@ -24,21 +22,7 @@ const MarksSchema={
         DSA : Number
 }
 
-const loginSchema={
-    Email: String,
-    Password: String
-}
-
 const Result = mongoose.model("marks",MarksSchema);
-const Signup=mongoose.model("creds",loginSchema);
-
-const maxAge=3*24*60*60;
-
-const createtoken=(id)=>{
-    return jwt.sign({id},'ragnar',{
-        expiresIn: maxAge
-    });
-}
 
 app.post("/addmarks",(req,res)=>{
     console.log("post recieved");
@@ -54,14 +38,6 @@ app.post("/addmarks",(req,res)=>{
      mark.save();
 });
 
-app.post("/signup", async (req,res)=>{
-    const salt=await bcrypt.genSalt(10);
-    const user=new Signup(req.body);
-    user.Password=await bcrypt.hash(user.Password,salt);
-    user.save();
-    res.send("user registered");
-});
-
 
 app.get('/',(req,res)=>{
     res.send("welcome")
@@ -75,20 +51,7 @@ app.get('/details',(req,res)=>{
      });
 });
 
-app.get('/login',async (req,res)=>{
-    const pass=req.query.Password;
-   // console.log(pass);
-   Signup.findOne((err,creds)=>{
-        console.log(creds);
-        if(creds.length !==0){
-             bcrypt.compare(pass,creds.Password,function(err,auth){
-                    if(auth){
-                        console.log("authenticated");
-                    } 
-             })
-        }
-   });
-});
+
 
 const PORT = process.env.PORT || 8080;
   

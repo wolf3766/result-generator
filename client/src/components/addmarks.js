@@ -2,6 +2,7 @@ import axios from "axios"
 import "./style/addmarks.css"
 import { useEffect } from "react"
 import { useState } from "react"
+import {logout} from "../firebase";
 
 function Addmarks(){
     const [formdata,setformdata]=useState({
@@ -37,6 +38,7 @@ const handlechange = (e)=>{
             console.log(error);
           });
           console.log(formdata);
+          window.location.assign('/addmarks');
     };
 
     return(
