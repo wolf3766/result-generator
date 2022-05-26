@@ -10,7 +10,10 @@ app.use(bodyParser.urlencoded({
 }));
 app.use(bodyParser.json());
   
-mongoose.connect("mongodb+srv://skc3766:1234@cluster0.wsew7.mongodb.net/Result?retryWrites=true&w=majority"); // for connection with local database.
+// const URL="mongodb+srv://skc3766:1234@cluster0.wsew7.mongodb.net/Result?retryWrites=true&w=majority";
+
+mongoose.connect("mongodb://localhost:27017/result")
+
 
 const MarksSchema={
         Student: String,
@@ -33,7 +36,7 @@ app.post("/addmarks",(req,res)=>{
         Computer_networks:req.body.Computer_networks,
         web_dev:req.body.web_dev,
         operating_system:req.body.operating_system,
-        DSA:req.body.DSA
+        DSA:req.body.DSA 
     }); 
      mark.save();
 });
@@ -44,14 +47,15 @@ app.get('/',(req,res)=>{
 });
 
 app.get('/details',(req,res)=>{
-    console.log("get recieved")
-    Result.find(function(err, founddetails){
-        console.log(founddetails)
-        res.send(founddetails);
-     });
+    console.log("get recieved");
+   Result.findOne({UID:req.query.UID}, function(err,docs){
+      if(err){
+          console.log(err);
+      }else{
+          res.send(docs);
+      }
+  });
 });
-
-
 
 const PORT = process.env.PORT || 8080;
   

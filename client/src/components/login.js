@@ -9,12 +9,8 @@ function Login() {
   const [password, setPassword] = useState("");
   const [user, loading, error] = useAuthState(auth);
   const navigate = useNavigate();
-  useEffect(() => {
-    if (loading) {
-      // maybe trigger a loading screen
-      return;
-    }
 
+  useEffect(() => {
     if (user) navigate("/dashboard");
   }, [user, loading]);
 
@@ -48,7 +44,7 @@ function Login() {
           <Link to="/reset">Forgot Password</Link>
         </div>
         <div>
-          Don't have an account? <Link to="/register">Register</Link> now.
+          Don't have an account? <Link to="/signup">Register</Link> now.
         </div>
       </div>
     </div>
