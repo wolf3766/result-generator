@@ -1,7 +1,11 @@
 import axios from "axios"
 import "./style/addmarks.css"
+import { auth } from "../firebase"
 import { useEffect } from "react"
 import { useState } from "react"
+import {logout} from "../firebase";
+import Login from "./login"
+
 
 function Addmarks(){
     const [formdata,setformdata]=useState({
@@ -13,7 +17,15 @@ function Addmarks(){
         'operating_system':"",
         'DSA':""
     });
-
+    // useEffect(()=>{
+       
+    // })
+    var user = auth().currentUser;
+//     if(!user){
+//     window.location.replace("./login");
+// }
+   
+        
 const handlechange = (e)=>{
     setformdata({
         ...formdata,
@@ -22,7 +34,7 @@ const handlechange = (e)=>{
 }; 
     const handlesubmit=(e)=>{
         e.preventDefault();
-        axios.post('http://localhost:8080/addmarks',{
+        axios.post('/addmarks',{
             Student:formdata.Student,
             UID:formdata.UID,
             DBMS:formdata.DBMS,
@@ -37,9 +49,12 @@ const handlechange = (e)=>{
             console.log(error);
           });
           console.log(formdata);
+          
+          window.location.assign('/addmarks');
     };
 
     return(
+            
 
          <div style={{'width': '80vh'}} className="container">
          <h1>Marks upload</h1>
