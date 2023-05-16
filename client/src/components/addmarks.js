@@ -1,90 +1,73 @@
 import axios from "axios"
 import "./style/addmarks.css"
 import { auth } from "../firebase"
-import { useEffect } from "react"
-import { useState } from "react"
-import {logout} from "../firebase";
-import Login from "./login"
+import { useState, nav } from "react"
 
+function Addmarks() {
+    const [formdata, setformdata] = useState({
+        Student: '',
+        UID: '',
+        attendance: 0,
+        externalmarks: 0,
+        internalmarks: 0
+    });
 
-function Addmarks(){
-    const [formdata,setformdata]=useState({
-        'Student':'',
-        'UID':'',
-        'DBMS':"",
-        'Computer_networks':"",
-        'web_dev':"",
-        'operating_system':"",
-        'DSA':""
-    });
-    // useEffect(()=>{
-       
-    // })
-    var user = auth().currentUser;
-//     if(!user){
-//     window.location.replace("./login");
-// }
-   
-        
-const handlechange = (e)=>{
-    setformdata({
-        ...formdata,
-        [e.target.name]: e.target.value
-    });
-}; 
-    const handlesubmit=(e)=>{
-        e.preventDefault();
-        axios.post('/addmarks',{
-            Student:formdata.Student,
-            UID:formdata.UID,
-            DBMS:formdata.DBMS,
-            Computer_networks:formdata.Computer_networks,
-            web_dev:formdata.web_dev,
-            operating_system:formdata.operating_system,
-            DSA:formdata.DSA
-        }) 
-        .then((response) => {
-            console.log(response);
-          }, (error) => {
-            console.log(error);
-          });
-          console.log(formdata);
-          
-          window.location.assign('/addmarks');
+    var user = auth.currentUser;
+
+    const handlechange = (e) => {
+        setformdata({
+            ...formdata,
+            [e.target.name]: e.target.value
+        });
     };
+    const handlesubmit = (e) => {
+        e.preventDefault();
+        axios.post('/addmarks', {
+            Student: formdata.Student,
+            UID: formdata.UID,
+            attendance: formdata.attendance,
+            externalmarks: formdata.externalmarks,
+            internalmarks: formdata.internalmarks
+        })
+            .then((response) => {
+                console.log(response);
+            }, (error) => {
+                console.log(error);
+            });
+        alert("Marks Added for Student Evaluation")
+        nav("/dashboard")
 
-    return(
-            
+    };
+    if (user) {
+        return (
+            <div style={{ 'width': '80vh' }} className="container">
 
-         <div style={{'width': '80vh'}} className="container">
-         <h1>Marks upload</h1>
-        <form onSubmit={handlesubmit}>
-            <label for="NAME">NAME</label>
-            <input type="String" required name='Student' onChange={handlechange} />
+                <h1>Marks upload</h1>
+                <form onSubmit={handlesubmit}>
+                    <label for="NAME">NAME</label>
+                    <input type="String" required name='Student' onChange={handlechange} />
 
-            <label for="UID">UID</label>
-            <input type="String" required name="UID" onChange={handlechange} />
+                    <label for="UID">UID</label>
+                    <input type="String" required name="UID" placeholder="Example 20BCS9960" onChange={handlechange} />
 
-            <label for="DBMS">DBMS </label>
-            <input type="Number" required name='DBMS' onChange={handlechange} />
+                    <label for="ATTENDANCE">Attendance</label>
+                    <input type="Number" required name="attendance" placeholder="Out of 10" max={10} onChange={handlechange} />
 
-            <label for="computer_networks">Computer Networks</label>
-            <input type="Number" required name='Computer_networks' onChange={handlechange} />
-            
-            <label for="web_dev">web Devlopment </label>
-            <input type="Number" required name='web_dev' onChange={handlechange} />
-           
+                    <label for="EXTERNALMARKS">External Marks</label>
+                    <input type="Number" required name="externalmarks" placeholder="Out of 50" max={50} onChange={handlechange} />
 
-            <label for="operating system">operating System </label>
-            <input type="Number" required name='operating_system' onChange={handlechange} />
+                    <label for="INTERNALMARKS">Internal Marks</label>
+                    <input type="Number" required name="internalmarks" placeholder="Out of 40" max={40} onChange={handlechange} />
 
-            <label for="DSA">DSA </label>
-            <input type="Number" required name='DSA' onChange={handlechange} />
-            <input type="submit" value="Submit" />
-            
-        </form>
-        </div>
-    )
+                    <input type="submit" value="Submit" />
+                </form>
+            </div>
+        )
+    } else {
+        return (
+            alert("do login please !")
+        )
+    }
 }
 
 export default Addmarks;
