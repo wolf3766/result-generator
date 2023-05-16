@@ -2,8 +2,8 @@
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
 import { getAuth } from "firebase/auth";
-import { GoogleAuthProvider,signInWithPopup, signInWithEmailAndPassword, createUserWithEmailAndPassword,sendPasswordResetEmail,signOut } from "firebase/auth";
-import{getFirestore,query,getDocs,collection,where,addDoc} from "firebase/firestore";
+import { GoogleAuthProvider, signInWithPopup, signInWithEmailAndPassword, createUserWithEmailAndPassword, sendPasswordResetEmail, signOut } from "firebase/auth";
+import { getFirestore, query, getDocs, collection, where, addDoc } from "firebase/firestore";
 import { Navigate } from "react-router-dom";
 
 
@@ -18,10 +18,10 @@ const firebaseConfig = {
 };
 
 // Initialize Firebase
-const app=initializeApp(firebaseConfig);
-const analytics=getAnalytics(app);
+const app = initializeApp(firebaseConfig);
+const analytics = getAnalytics(app);
 const auth = getAuth(app);
-const db=getFirestore(app);
+const db = getFirestore(app);
 
 
 const googleProvider = new GoogleAuthProvider();
@@ -87,7 +87,7 @@ const sendPasswordReset = async (email) => {
 const logout = () => {
   console.log("requested");
   signOut(auth);
-  window.location.assign('/Home');
+  window.location.assign('/login');
 };
 
 
